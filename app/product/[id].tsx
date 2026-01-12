@@ -22,14 +22,14 @@ export default function Product() {
         }
     }
     return (
-        <SafeAreaView className='flex-1 items-center'>
+        <SafeAreaView className='flex-1 items-center min-h-full bg-primary'>
             <Image source={{ uri: product?.image }} className="w-full h-80 bg-blue-500" resizeMode="cover" />
-            <Text className="mt-5">{product?.name} for {product?.price}$</Text>
-            <Pressable className="w-64 h-12 mt-5 flex items-center justify-center rounded-full bg-blue-500" onPress={() => { toggleFavorite() }}>
+            <Text className="mt-5 text-primary">{product?.name} for {product?.price}$</Text>
+            <Pressable className="w-64 h-12 mt-5 flex items-center justify-center rounded-full bg-special" onPress={() => { toggleFavorite() }}>
                 <Text className="text-white">{isFavorite(Number(product?.id)) ? "Remove from favorites" : "Mark as favorite"}</Text>
             </Pressable>
-            <Pressable className="w-fit h-12 mt-3 px-12 flex items-center justify-center rounded-full bg-gray-700" onPress={() => router.back()}>
-                <Text className='text-white'>Back</Text>
+            <Pressable className="w-fit h-12 mt-3 px-12 flex items-center justify-center rounded-full bg-secondary" onPress={() => router.back()}>
+                <Text className='text-primary'>Back</Text>
             </Pressable>
         </SafeAreaView>
     )
