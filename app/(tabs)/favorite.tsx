@@ -7,13 +7,13 @@ import ProductListItem from '@/components/ProductListItem'
 export default function favorite() {
     const { favorites } = useFavorites()
     return (
-        <SafeAreaView className='flex items-center min-h-full bg-primary'>
+        <SafeAreaView className='flex-1 items-center bg-primary'>
             <Text className="text-2xl font-bold text-primary">Favorite</Text>
             <FlatList
                 className='w-[80%]'
                 data={favorites}
                 renderItem={({ item }) => (
-                    <ProductListItem productId={item} />
+                    <ProductListItem product={item} />
                 )}
             />
         </SafeAreaView>

@@ -1,20 +1,22 @@
 import { createContext, useState, useContext, ReactNode, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Product } from "../data/products";
 
 interface FavoritesContextType {
-    favorites: number[];
-    addFavorite: (productId: number) => void;
-    removeFavorite: (productId: number) => void;
+    favorites: Product[];
+    addFavorite: (product: Product) => void;
+    removeFavorite: (product: Product) => void;
+    clearFavorites: () => void;
 }
 
 export const FavoritesContext = createContext<FavoritesContextType | null>(null);
 
 export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
-    const [favorites, setFavorites] = useState<number[]>([]);
+    const [favorites, setFavorites] = useState<Product[]>([]);
 
-    const addFavorite = (productId: number) => {
+    const addFavorite = (product: Product) => {
         try {
-            const newFavorites = [...favorites, productId];
+            const newFavorites = [...favorites, product];
             setFavorites(newFavorites);
             AsyncStorage.setItem("favorites", JSON.stringify(newFavorites));
         } catch (e) {
@@ -22,15 +24,24 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
-    const removeFavorite = (productId: number) => {
+    const removeFavorite = (product: Product) => {
         try {
-            const newFavorites = favorites.filter(p => p !== productId);
+            const newFavorites = favorites.filter(p => p.id !== product.id);
             setFavorites(newFavorites);
             AsyncStorage.setItem("favorites", JSON.stringify(newFavorites));
         } catch (e) {
             throw new Error(e as string);
         }
     };
+
+    const clearFavorites = () => {
+        try {
+            setFavorites([]);
+            AsyncStorage.removeItem("favorites");
+        } catch (e) {
+            throw new Error(e as string);
+        }
+    }
 
     useEffect(() => {
         try {
@@ -45,7 +56,7 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     return (
-        <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite }}>
+        <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite, clearFavorites }}>
             {children}
         </FavoritesContext.Provider>
     );
