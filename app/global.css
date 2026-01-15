@@ -15,6 +15,10 @@
         @apply text-gray-900 dark:text-gray-100;
     }
 
+    .text-button {
+        @apply text-gray-100 dark:text-gray-100;
+    }
+
     .text-special {
         @apply text-blue-500 dark:text-blue-500;
     }
