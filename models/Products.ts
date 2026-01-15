@@ -6,4 +6,5 @@ export interface ProductModel {
     category: string;
     image: string;
     count: number;
+    owner: string;
 }

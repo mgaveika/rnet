@@ -46,7 +46,10 @@ export default function settings() {
                     <Switch value={theme === "dark"} onValueChange={toggleTheme} />
                 </View>
             </View>
-            <Pressable onPress={handleLogout} className='mt-2 bg-gray-500 w-[80%] p-3 rounded-lg items-center'>
+            <Pressable onPress={() => router.push('/addProduct')} className='mt-2 bg-gray-500 w-[80%] p-3 rounded-lg items-center'>
+                <Text className='text-white font-bold'>Add product</Text>
+            </Pressable>
+            <Pressable onPress={handleLogout} className='bottom-0 absolute mb-5 bg-gray-500 w-[80%] p-3 rounded-lg items-center'>
                 <Text className='text-white font-bold'>Logout</Text>
             </Pressable>
         </SafeAreaView>

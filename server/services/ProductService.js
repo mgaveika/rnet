@@ -17,6 +17,22 @@ class ProductService {
             throw err
         }
     }
+    static async updateProductById({ id, ...body }) {
+        try {
+            const data = await Product.findByIdAndUpdate(id, body, { new: true })
+            return data
+        } catch (err) {
+            throw err
+        }
+    }
+    static async createProduct({ body }) {
+        try {
+            const data = await Product.create(body)
+            return data
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 module.exports = ProductService

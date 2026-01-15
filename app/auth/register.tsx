@@ -52,7 +52,7 @@ export default function register() {
       .then(res => res.json())
       .then(async data => {
         if (data.status === "success") {
-          router.replace("./")
+          router.replace("/")
         } else if (data.status === "error") {
           setMessage(data.message)
         } else {
@@ -71,7 +71,7 @@ export default function register() {
         <View className='w-full flex items-center gap-4'>
           <Text className='text-red-500'>{message}</Text>
           <View className='w-[70%]'>
-            <Text>E-mail</Text>
+            <Text className='text-primary'>E-mail</Text>
             <TextInput
               className='bg-secondary w-full rounded-md'
               placeholder='E-mail'
@@ -80,7 +80,7 @@ export default function register() {
             ></TextInput>
           </View>
           <View className='w-[70%]'>
-            <Text>Username</Text>
+            <Text className='text-primary'>Username</Text>
             <TextInput
               className='bg-secondary w-full rounded-md'
               placeholder='Username'

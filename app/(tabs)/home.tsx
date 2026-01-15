@@ -4,11 +4,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProductModel } from '../../models/Products';
 import ProductListItem from '../../components/ProductListItem';
 import { ActivityIndicator } from 'react-native';
+import { usePathname } from 'expo-router';
 
 export default function HomeScreen() {
   const [products, setProducts] = useState<ProductModel[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const pathname = usePathname()
   useEffect(() => {
     fetch("http://172.20.10.2:5001/api/product", {
       credentials: 'include'
@@ -21,7 +22,7 @@ export default function HomeScreen() {
         }
       })
       .catch(error => console.error(error));
-  }, [])
+  }, [pathname])
 
   return <>
     {loading ?
@@ -34,7 +35,7 @@ export default function HomeScreen() {
         <FlatList
           className='w-[80%]'
           data={products}
-          renderItem={({ item }) => (<ProductListItem product={{ _id: item._id, title: item.title, price: item.price, description: item.description, category: item.category, image: item.image, count: item.count }} />)}
+          renderItem={({ item }) => (<ProductListItem product={{ _id: item._id, title: item.title, price: item.price, description: item.description, category: item.category, image: item.image, count: item.count, owner: item.owner }} />)}
           keyExtractor={(item) => item._id}
         />
       </SafeAreaView>
