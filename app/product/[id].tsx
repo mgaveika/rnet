@@ -16,6 +16,29 @@ export default function ProductPage() {
     const [userId, setUserId] = useState('');
     const [newStock, setNewStock] = useState('');
 
+    const addToCart = () => {
+        setLoading(true)
+        fetch(`http://172.20.10.2:5001/api/cart`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({ productId: id, quantity: 1 })
+            }
+        )
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    setProduct((prevProduct) => prevProduct ? { ...prevProduct, count: prevProduct.count - 1 } : prevProduct)
+                    setNewStock((prevStock) => (Number(prevStock) - 1).toString())
+                    setLoading(false)
+                }
+            })
+            .catch(error => console.error(error));
+    }
+
     const toggleFavorite = () => {
         setLoading(true)
         if (isFavorite) {
@@ -90,6 +113,7 @@ export default function ProductPage() {
                                 .then(res => res.json())
                                 .then(data => {
                                     setIsFavorite(data.data);
+                                    setLoading(false)
                                 })
                                 .catch(error => console.error(error));
                         })
@@ -132,13 +156,16 @@ export default function ProductPage() {
                                 placeholder="0"
                                 keyboardType="numeric"
                             />
-                            <Pressable disabled={newStock === product?.count.toString()} onPress={updateStock} className='bg-special rounded-full py-2 px-5'>
-                                <Text className='text-primary'>Update</Text>
+                            <Pressable disabled={newStock === product?.count.toString()} onPress={updateStock} className={`bg-special rounded-full py-2 px-5 ${newStock === product?.count.toString() || loading ? 'opacity-50' : ''}`}>
+                                <Text className='text-button'>Update</Text>
                             </Pressable>
                         </> : (
                             <Text className='text-primary text-center font-bold text-xl'>{product?.count}</Text>
                         )}
                     </View>
+                    <Pressable disabled={product?.count === 0} onPress={addToCart} className={`bg-special rounded-full py-2 px-5 mt-5 ${product?.count === 0 || loading ? 'opacity-50' : ''}`}>
+                        <Text className='text-button font-bold'>Add to cart</Text>
+                    </Pressable>
                     <View className='flex-1 w-full items-center mt-5 mb-5'>
                         <View className='w-[80%] bg-secondary p-2 rounded-lg rounded-md shrink'>
                             <Text className='text-primary text-center text-xl font-bold mb-2'>Description</Text>

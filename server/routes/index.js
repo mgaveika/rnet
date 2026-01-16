@@ -4,6 +4,7 @@ const auth = require("./auth")
 const user = require("./user")
 const product = require("./product")
 const favorite = require("./favorite")
+const cart = require("./cart")
 
 const authorized = require("../middleware/Authorized")
 
@@ -14,5 +15,6 @@ router
     .use("/user", authorized, user)
     .use("/product", authorized, product)
     .use("/favorite", authorized, favorite)
+    .use("/cart", authorized, cart)
 
 module.exports = router
