@@ -99,7 +99,7 @@ export default function AddProduct() {
                     </View>
                 </View>
                 <Pressable className="w-[80%] h-12 px-12 flex items-center justify-center rounded-full bg-special mb-5" onPress={() => handleSubmit()}>
-                    <Text className='text-primary font-bold'>Add Product</Text>
+                    <Text className='text-button font-bold'>Add Product</Text>
                 </Pressable>
                 <Pressable className="w-[80%] mt-auto h-12 px-12 flex items-center justify-center rounded-full bg-secondary mb-5" onPress={() => router.back()}>
                     <Text className='text-primary font-bold'>Back</Text>
